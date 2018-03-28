@@ -4,5 +4,4 @@ namespace Glaubinix\OpenAPI\Exception;
 
 class UnsupportedStatusCodeException extends \InvalidArgumentException implements OpenApiException
 {
-
 }

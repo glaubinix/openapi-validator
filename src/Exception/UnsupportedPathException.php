@@ -4,5 +4,4 @@ namespace Glaubinix\OpenAPI\Exception;
 
 class UnsupportedPathException extends \InvalidArgumentException implements OpenApiException
 {
-
 }

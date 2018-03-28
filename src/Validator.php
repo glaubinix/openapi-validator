@@ -4,5 +4,4 @@ namespace Glaubinix\OpenAPI;
 
 class Validator
 {
-
 }

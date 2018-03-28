@@ -4,5 +4,4 @@ namespace Glaubinix\OpenAPI\Schema;
 
 interface SchemaInterface
 {
-
 }

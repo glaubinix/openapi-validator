@@ -122,7 +122,7 @@ class OpenAPI3Test extends TestCase
 
     public function testGetResponseBody()
     {
-        $this->assertSame(['$ref' => '#/components/schemas/Response'], (array)$this->schema->getResponseBody('/', 'post', 200,'application/json'));
+        $this->assertSame(['$ref' => '#/components/schemas/Response'], (array)$this->schema->getResponseBody('/', 'post', 200, 'application/json'));
     }
 
     /**

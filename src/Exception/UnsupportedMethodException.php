@@ -4,6 +4,4 @@ namespace Glaubinix\OpenAPI\Exception;
 
 class UnsupportedMethodException extends \InvalidArgumentException implements OpenApiException
 {
-
 }
-

@@ -4,5 +4,4 @@ namespace Glaubinix\OpenAPI\Exception;
 
 class UnsupportedMediaTypeException extends \InvalidArgumentException implements OpenApiException
 {
-
 }

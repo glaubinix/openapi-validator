@@ -15,7 +15,7 @@ class TypeConverter implements ConverterInterface
             $format = 'date-time';
         }
 
-        switch($schema->type) {
+        switch ($schema->type) {
             case 'integer':
                 $type = 'integer';
                 break;
