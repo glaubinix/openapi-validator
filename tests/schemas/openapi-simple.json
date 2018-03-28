@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "required": [
+        "name",
+        "unused"
+    ],
+    "properties": {
+        "id": {
+            "type": "integer",
+            "example": 12,
+            "description": "Test id",
+            "readOnly": true
+        },
+        "name": {
+            "type": "string",
+            "example": "Test name",
+            "description": "Test name",
+            "nullable": true
+        },
+        "date": {
+            "type": "date"
+        }
+    },
+    "x-patternProperties": {
+        "^[A-Z]{2}$": {
+            "type": "string"
+        }
+    }
+}
