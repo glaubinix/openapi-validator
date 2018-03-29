@@ -24,19 +24,29 @@ class SymfonyRequestAdapter implements RequestAdapterInterface
         return $this->request->getContent();
     }
 
-    public function getContentType(): string
+    public function getMediaType(): string
     {
         return $this->request->headers->get('CONTENT_TYPE');
     }
 
-    public function getHeaders(): array
+    public function getHeaderParameters(): array
     {
-        // TODO: Implement getHeaders() method.
+        return $this->request->headers->all();
     }
 
-    public function getQueryParams(): array
+    public function getQueryParameters(): array
     {
         return $this->request->query->all();
+    }
+
+    public function getPathParameters(): array
+    {
+        return $this->request->attributes->all();
+    }
+
+    public function getCookieParameters(): array
+    {
+        return $this->request->cookies->all();
     }
 
     public function getRouteName(): string

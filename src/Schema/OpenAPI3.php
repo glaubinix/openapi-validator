@@ -9,7 +9,7 @@ class OpenAPI3 implements SchemaInterface
     /** @var \stdClass */
     private $schema;
 
-    public function __construct(object $schema)
+    public function __construct(\stdClass $schema)
     {
         $this->schema = $schema;
     }

@@ -8,5 +8,5 @@ interface ResponseAdapterInterface
     public function getMediaType(): string;
     public function getHeaders(): array;
     public function getStatusCode(): int;
-    public function getBody(): string;
+    public function getContent(): string;
 }

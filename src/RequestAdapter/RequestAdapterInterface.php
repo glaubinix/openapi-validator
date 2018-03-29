@@ -6,7 +6,9 @@ interface RequestAdapterInterface
 {
     public function getMethod(): string;
     public function getContent(): string;
-    public function getContentType(): string;
-    public function getHeaders(): array ;
-    public function getQueryParams(): array;
+    public function getMediaType(): string;
+    public function getHeaderParameters(): array;
+    public function getQueryParameters(): array;
+    public function getPathParameters(): array;
+    public function getCookieParameters(): array;
 }

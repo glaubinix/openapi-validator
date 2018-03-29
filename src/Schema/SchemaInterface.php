@@ -4,4 +4,10 @@ namespace Glaubinix\OpenAPI\Schema;
 
 interface SchemaInterface
 {
+    public function getQueryParameters(string $path, string  $method): array;
+    public function getHeaderParameters(string $path, string  $method): array;
+    public function getPathParameters(string $path, string  $method): array;
+    public function getCookieParameters(string $path, string  $method): array;
+    public function getRequestBody(string $path, string $method, string $mediaType): \stdClass;
+    public function getResponseBody(string $path, string $method, int $statusCode, string $mediaType): \stdClass;
 }
