@@ -12,13 +12,13 @@ class SchemaLoaderTest extends TestCase
     private $loader;
     private $dereferencer;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->dereferencer = $this->getMockBuilder(DereferencerInterface::class)->getMock();
         $this->loader = new SchemaLoader($this->dereferencer);
     }
 
-    public function testLoadSchema()
+    public function testLoadSchema(): void
     {
         $pathToSchema = '/path/to/schema/openapi.json';
         $schema = new \stdClass();
@@ -38,7 +38,7 @@ class SchemaLoaderTest extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedSchemaVersionException
      */
-    public function testLoadSchemaUnsupported()
+    public function testLoadSchemaUnsupported(): void
     {
         $pathToSchema = '/path/to/schema/openapi.json';
         $schema = new \stdClass();

@@ -9,12 +9,12 @@ class CleanRequiredTest extends TestCase
     /** @var CleanRequired */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new CleanRequired();
     }
 
-    public function testConvertNoRequired()
+    public function testConvertNoRequired(): void
     {
         $schema = (object)[
             'properties' => (object)[
@@ -29,7 +29,7 @@ class CleanRequiredTest extends TestCase
         $this->assertSame($expected, json_encode($this->converter->convert($schema)));
     }
 
-    public function testConvertEmptyRequired()
+    public function testConvertEmptyRequired(): void
     {
         $schema = (object)[
             'required' => [],
@@ -45,7 +45,7 @@ class CleanRequiredTest extends TestCase
         $this->assertSame($expected, json_encode($this->converter->convert($schema)));
     }
 
-    public function testConvertRequired()
+    public function testConvertRequired(): void
     {
         $schema = (object)[
             'required' => [
@@ -63,7 +63,7 @@ class CleanRequiredTest extends TestCase
         $this->assertSame($expected, json_encode($this->converter->convert($schema)));
     }
 
-    public function testConvertRequiredCleanup()
+    public function testConvertRequiredCleanup(): void
     {
         $schema = (object)[
             'required' => [

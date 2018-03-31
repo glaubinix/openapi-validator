@@ -7,7 +7,7 @@ use Glaubinix\OpenAPI\Schema\SchemaInterface;
 
 class QueryParametersValidator extends ParametersValidator
 {
-    public function validate(SchemaInterface $schema, RequestAdapterInterface $request, string $path)
+    public function validate(SchemaInterface $schema, RequestAdapterInterface $request, string $path): \stdClass
     {
         return $this->doValidate((object) $request->getQueryParameters(), $schema->getQueryParameters($path, $request->getMethod()));
     }

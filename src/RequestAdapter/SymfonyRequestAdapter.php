@@ -31,7 +31,9 @@ class SymfonyRequestAdapter implements RequestAdapterInterface
 
     public function getHeaderParameters(): array
     {
-        return $this->request->headers->all();
+        return array_map(function ($header) {
+            return \count($header) ? $header[0] : $header;
+        }, $this->request->headers->all());
     }
 
     public function getQueryParameters(): array
@@ -41,7 +43,10 @@ class SymfonyRequestAdapter implements RequestAdapterInterface
 
     public function getPathParameters(): array
     {
-        return $this->request->attributes->all();
+        $parameters = $this->request->attributes->all();
+        unset($parameters['_route']);
+
+        return $parameters;
     }
 
     public function getCookieParameters(): array

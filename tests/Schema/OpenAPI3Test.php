@@ -9,7 +9,7 @@ class OpenAPI3Test extends TestCase
     /** @var OpenAPI3 */
     private $schema;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->schema = new OpenAPI3(json_decode(json_encode([
             'paths' => [
@@ -71,27 +71,27 @@ class OpenAPI3Test extends TestCase
         ])));
     }
 
-    public function testGetQueryParameters()
+    public function testGetQueryParameters(): void
     {
         $this->assertSame(json_encode([['name' => 'query', 'in' => 'query', 'schema' => ['type' => 'string']]]), json_encode($this->schema->getQueryParameters('/', 'post')));
     }
 
-    public function testGetHeaderParameters()
+    public function testGetHeaderParameters(): void
     {
         $this->assertSame(json_encode([['name' => 'header', 'in' => 'header', 'schema' => ['type' => 'string']]]), json_encode($this->schema->getHeaderParameters('/', 'post')));
     }
 
-    public function testGetPathParameters()
+    public function testGetPathParameters(): void
     {
         $this->assertSame(json_encode([['name' => 'path', 'in' => 'path', 'schema' => ['type' => 'string']]]), json_encode($this->schema->getPathParameters('/', 'post')));
     }
 
-    public function testGetCookieParameters()
+    public function testGetCookieParameters(): void
     {
         $this->assertSame(json_encode([['name' => 'cookie', 'in' => 'cookie', 'schema' => ['type' => 'string']]]), json_encode($this->schema->getCookieParameters('/', 'post')));
     }
 
-    public function testGetRequestBody()
+    public function testGetRequestBody(): void
     {
         $this->assertSame(['$ref' => '#/components/schemas/Request'], (array)$this->schema->getRequestBody('/', 'post', 'application/json'));
     }
@@ -99,7 +99,7 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedPathException
      */
-    public function testGetRequestBodyUndefinedPath()
+    public function testGetRequestBodyUndefinedPath(): void
     {
         $this->schema->getRequestBody('/api', 'post', 'application/json');
     }
@@ -107,7 +107,7 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedMethodException
      */
-    public function testGetRequestBodyUndefinedMethod()
+    public function testGetRequestBodyUndefinedMethod(): void
     {
         $this->schema->getRequestBody('/', 'put', 'application/json');
     }
@@ -115,12 +115,12 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedMediaTypeException
      */
-    public function testGetRequestBodyUndefinedMediaType()
+    public function testGetRequestBodyUndefinedMediaType(): void
     {
         $this->schema->getRequestBody('/', 'post', 'text/html');
     }
 
-    public function testGetResponseBody()
+    public function testGetResponseBody(): void
     {
         $this->assertSame(['$ref' => '#/components/schemas/Response'], (array)$this->schema->getResponseBody('/', 'post', 200, 'application/json'));
     }
@@ -128,7 +128,7 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedPathException
      */
-    public function testGetResponseBodyUndefinedPath()
+    public function testGetResponseBodyUndefinedPath(): void
     {
         $this->schema->getResponseBody('/api', 'post', 200, 'application/json');
     }
@@ -136,7 +136,7 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedMethodException
      */
-    public function testGetResponseBodyUndefinedMethod()
+    public function testGetResponseBodyUndefinedMethod(): void
     {
         $this->schema->getResponseBody('/', 'put', 200, 'application/json');
     }
@@ -144,7 +144,7 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedStatusCodeException
      */
-    public function testGetResponseBodyUndefinedStatusCode()
+    public function testGetResponseBodyUndefinedStatusCode(): void
     {
         $this->schema->getResponseBody('/', 'post', 404, 'application/json');
     }
@@ -152,7 +152,7 @@ class OpenAPI3Test extends TestCase
     /**
      * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedMediaTypeException
      */
-    public function testGetResponseBodyUndefinedMediaType()
+    public function testGetResponseBodyUndefinedMediaType(): void
     {
         $this->schema->getResponseBody('/', 'post', 200, 'text/html');
     }

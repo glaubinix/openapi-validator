@@ -93,7 +93,7 @@ class RequestBodyValidatorTest extends TestCase
         $this->request
             ->expects($this->once())
             ->method('getContent')
-            ->will($this->returnValue($content));
+            ->will($this->returnValue(json_encode($content)));
 
         $this->request
             ->expects($this->once())

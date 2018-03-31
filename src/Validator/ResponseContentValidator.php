@@ -2,14 +2,13 @@
 
 namespace Glaubinix\OpenAPI\Validator;
 
-use Glaubinix\OpenAPI\Exception\JsonException;
 use Glaubinix\OpenAPI\Exception\ValidationException;
-use Glaubinix\OpenAPI\RequestAdapter\RequestAdapterInterface;
+use Glaubinix\OpenAPI\ResponseAdapter\ResponseAdapterInterface;
 use Glaubinix\OpenAPI\Schema\SchemaInterface;
 use Glaubinix\OpenAPI\SchemaConverter;
 use JsonSchema\Validator;
 
-class RequestBodyValidator
+class ResponseContentValidator
 {
     /** @var SchemaConverter */
     private $converter;
@@ -22,16 +21,12 @@ class RequestBodyValidator
         $this->validator = $validator;
     }
 
-    public function validate(SchemaInterface $schema, RequestAdapterInterface $request, string $path)
+    public function validate(SchemaInterface $schema, ResponseAdapterInterface $response, string $path)
     {
-        $openApiSchema = $schema->getRequestBody($path, $request->getMethod(), $request->getMediaType());
+        $openApiSchema = $schema->getResponseBody($path, $response->getMethod(), $response->getStatusCode(), $response->getMediaType());
         $jsonSchema = $this->converter->convert($openApiSchema);
 
-        $content = $request->getContent();
-        $value = $content ? json_decode($content) : $content;
-        if (json_last_error()) {
-            throw new JsonException(json_last_error_msg());
-        }
+        $value = $response->getContent();
 
         $this->validator->reset();
         $this->validator->validate($value, $jsonSchema);

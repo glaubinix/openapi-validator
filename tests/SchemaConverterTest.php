@@ -14,7 +14,7 @@ class SchemaConverterTest extends TestCase
     /** @var SchemaConverter */
     private $converter;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->converter = new SchemaConverter([
             new XPatternProperties(),
@@ -25,7 +25,7 @@ class SchemaConverterTest extends TestCase
         ]);
     }
 
-    public function testConvert()
+    public function testConvert(): void
     {
         $initial = new \stdClass();
         $expected = json_encode($initial);
@@ -34,7 +34,7 @@ class SchemaConverterTest extends TestCase
         $this->assertSame($expected, json_encode($schema));
     }
 
-    public function testConvertProperty()
+    public function testConvertProperty(): void
     {
         $initial = json_decode(file_get_contents(__DIR__ . '/schemas/openapi-simple.json'));
         $schema = $this->converter->convert($initial);

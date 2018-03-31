@@ -9,12 +9,12 @@ class NotSupportedTest extends TestCase
     /** @var NotSupported */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new NotSupported();
     }
 
-    public function testConvertDiscriminator()
+    public function testConvertDiscriminator(): void
     {
         $schema = (object)[
             'type' => 'object',
@@ -26,7 +26,7 @@ class NotSupportedTest extends TestCase
         $this->assertSame(json_encode(['type' => 'object']), json_encode($this->converter->convert($schema)));
     }
 
-    public function testConvertReadOnly()
+    public function testConvertReadOnly(): void
     {
         $schema = (object)[
             'type' => 'string',
@@ -36,7 +36,7 @@ class NotSupportedTest extends TestCase
         $this->assertSame(['type' => 'string'], (array)$this->converter->convert($schema));
     }
 
-    public function testConvertWriteOnly()
+    public function testConvertWriteOnly(): void
     {
         $schema = (object)[
             'type' => 'string',
@@ -46,7 +46,7 @@ class NotSupportedTest extends TestCase
         $this->assertSame(['type' => 'string'], (array)$this->converter->convert($schema));
     }
 
-    public function testXml()
+    public function testXml(): void
     {
         $schema = (object)[
             'type' => 'string',
@@ -58,7 +58,7 @@ class NotSupportedTest extends TestCase
         $this->assertSame(['type' => 'string'], (array)$this->converter->convert($schema));
     }
 
-    public function testExternalDocs()
+    public function testExternalDocs(): void
     {
         $schema = (object)[
             'type' => 'object',
@@ -70,7 +70,7 @@ class NotSupportedTest extends TestCase
         $this->assertSame(['type' => 'object'], (array)$this->converter->convert($schema));
     }
 
-    public function testConvertExample()
+    public function testConvertExample(): void
     {
         $schema = (object)[
             'type' => 'string',
@@ -80,7 +80,7 @@ class NotSupportedTest extends TestCase
         $this->assertSame(['type' => 'string'], (array)$this->converter->convert($schema));
     }
 
-    public function testConvertDeprecated()
+    public function testConvertDeprecated(): void
     {
         $schema = (object)[
             'type' => 'string',

@@ -19,7 +19,7 @@ class SchemaLoader
 
     public function loadSchema(string $pathToSchema): SchemaInterface
     {
-        $schema = $this->dereferencer->dereference($pathToSchema);
+        $schema = json_decode(json_encode($this->dereferencer->dereference($pathToSchema)));
 
         $majorVersion = 'undefined';
         if (property_exists($schema, 'openapi')) {

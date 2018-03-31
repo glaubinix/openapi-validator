@@ -7,7 +7,7 @@ use Glaubinix\OpenAPI\Schema\SchemaInterface;
 
 class HeaderParametersValidator extends ParametersValidator
 {
-    public function validate(SchemaInterface $schema, RequestAdapterInterface $request, string $path)
+    public function validate(SchemaInterface $schema, RequestAdapterInterface $request, string $path): \stdClass
     {
         return $this->doValidate((object) $request->getHeaderParameters(), $schema->getHeaderParameters($path, $request->getMethod()));
     }

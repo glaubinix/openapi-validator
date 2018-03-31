@@ -10,19 +10,9 @@ class ParameterConverter
         $required = [];
 
         foreach ($parameters as $parameter) {
-            $properties->{$parameter->name} = (object)[
-                'type' => $parameter->type,
-            ];
-            if (property_exists($parameter, 'format')) {
-                $properties->{$parameter->name}->format = $parameter->format;
-            }
-
+            $properties->{$parameter->name} = (object)$parameter->schema;
             if (property_exists($parameter, 'required') && $parameter->required) {
                 $required[] = $parameter->name;
-            }
-
-            if (property_exists($parameter, 'enum')) {
-                $properties->{$parameter->name}->enum = $parameter->enum;
             }
         }
 

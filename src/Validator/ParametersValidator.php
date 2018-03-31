@@ -23,7 +23,7 @@ abstract class ParametersValidator
         $this->parameterConverter = $parameterConverter;
     }
 
-    protected function doValidate(\stdClass $value, array $parameters)
+    protected function doValidate(\stdClass $value, array $parameters): \stdClass
     {
         $openApiSchema = $this->parameterConverter->convert($parameters);
         $jsonSchema = $this->converter->convert($openApiSchema);

@@ -4,24 +4,27 @@ namespace Glaubinix\OpenAPI\PathResolver;
 
 use Glaubinix\OpenAPI\RequestAdapter\RequestAdapterInterface;
 use Glaubinix\OpenAPI\RequestAdapter\SymfonyRequestAdapter;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouterInterface;
 
 class SymfonyPathResolver implements PathResolverInterface
 {
-    /** @var Router */
-    private $router;
+    /** @var RouteCollection */
+    private $routes;
 
-    public function __construct(Router $router)
+    public function __construct($router)
     {
-        $this->router = $router;
+        if ($router instanceof RouterInterface) {
+            $this->routes = $router->getRouteCollection();
+        } elseif ($router instanceof RouteCollection) {
+            $this->routes = $router;
+        }
     }
 
     public function getOpenApiPath(RequestAdapterInterface $request): string
     {
         if ($request instanceof SymfonyRequestAdapter) {
-            $routeCollection = $this->router->getRouteCollection();
-
-            return $routeCollection->get($request->getRouteName())->getPath();
+            return $this->routes->get($request->getRouteName())->getPath();
         }
     }
 }

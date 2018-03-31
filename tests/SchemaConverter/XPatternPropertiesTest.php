@@ -9,12 +9,12 @@ class XPatternPropertiesTest extends TestCase
     /** @var XPatternProperties */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new XPatternProperties();
     }
 
-    public function testConvert()
+    public function testConvert(): void
     {
         $options = [
             'supportPatternProperties' => true,
@@ -31,7 +31,7 @@ class XPatternPropertiesTest extends TestCase
         $this->assertSame(json_encode(['patternProperties' => ['^[A-Z]{2}$' => ['type' => 'string']]]), json_encode($this->converter->convert($schema, $options)));
     }
 
-    public function testConvertNotSupported()
+    public function testConvertNotSupported(): void
     {
         $options = [
             'supportPatternProperties' => false,
@@ -48,7 +48,7 @@ class XPatternPropertiesTest extends TestCase
         $this->assertSame([], (array)$this->converter->convert($schema, $options));
     }
 
-    public function testConvertNotAvailable()
+    public function testConvertNotAvailable(): void
     {
         $schema = (object)[];
 

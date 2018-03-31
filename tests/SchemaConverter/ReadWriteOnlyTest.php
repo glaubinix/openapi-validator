@@ -9,12 +9,12 @@ class ReadWriteOnlyTest extends TestCase
     /** @var ReadWriteOnly */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new ReadWriteOnly();
     }
 
-    public function testConvertReadOnlyRemoveReadOnly()
+    public function testConvertReadOnlyRemoveReadOnly(): void
     {
         $options = [
             'removeWriteOnly' => false,
@@ -29,7 +29,7 @@ class ReadWriteOnlyTest extends TestCase
         $this->assertNull($this->converter->convert($schema, $options));
     }
 
-    public function testConvertReadOnlyRemoveWriteOnly()
+    public function testConvertReadOnlyRemoveWriteOnly(): void
     {
         $options = [
             'removeWriteOnly' => true

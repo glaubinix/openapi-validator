@@ -36,6 +36,8 @@ class OpenAPI3 implements SchemaInterface
 
     private function getRequestParameters(string $path, string $method, string $location): array
     {
+        $method = strtolower($method);
+
         if (!property_exists($this->schema->paths, $path)) {
             throw new Exception\UnsupportedPathException(sprintf('Path %s not supported', $path));
         }
@@ -44,7 +46,7 @@ class OpenAPI3 implements SchemaInterface
             throw new Exception\UnsupportedMethodException(sprintf('Method %s not supported for path %s', $method, $path));
         }
 
-        if (!property_exists($this->schema->paths->{$path}->{$method}, 'parameters') && !is_array($this->schema->paths->{$path}->{$method}->parameters)) {
+        if (!property_exists($this->schema->paths->{$path}->{$method}, 'parameters') || !is_array($this->schema->paths->{$path}->{$method}->parameters)) {
             return [];
         }
 
@@ -53,14 +55,20 @@ class OpenAPI3 implements SchemaInterface
         }));
     }
 
-    public function getRequestBody(string $path, string $method, string $mediaType): \stdClass
+    public function getRequestBody(string $path, string $method, string $mediaType): object
     {
+        $method = strtolower($method);
+
         if (!property_exists($this->schema->paths, $path)) {
             throw new Exception\UnsupportedPathException(sprintf('Path %s not supported', $path));
         }
 
         if (!property_exists($this->schema->paths->{$path}, $method)) {
             throw new Exception\UnsupportedMethodException(sprintf('Method %s not supported for path %s', $method, $path));
+        }
+
+        if (!property_exists($this->schema->paths->{$path}->{$method}, 'requestBody')) {
+            return new \stdClass();
         }
 
         if (!property_exists($this->schema->paths->{$path}->{$method}->requestBody->content, $mediaType)) {
@@ -70,8 +78,10 @@ class OpenAPI3 implements SchemaInterface
         return $this->schema->paths->{$path}->{$method}->requestBody->content->{$mediaType}->schema;
     }
 
-    public function getResponseBody(string $path, string $method, int $statusCode, string $mediaType): \stdClass
+    public function getResponseBody(string $path, string $method, int $statusCode, string $mediaType): object
     {
+        $method = strtolower($method);
+
         if (!property_exists($this->schema->paths, $path)) {
             throw new Exception\UnsupportedPathException(sprintf('Path %s not supported', $path));
         }

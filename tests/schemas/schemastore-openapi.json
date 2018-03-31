@@ -1,0 +1,186 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/schemas": {
+            "get": {
+                "description": "Returns all schemas from the system",
+                "operationId": "findSchemas",
+                "parameters": [
+                    {
+                        "name": "version",
+                        "in": "query",
+                        "description": "version to filter by",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["3.0.0", "3.0.1"]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "header",
+                        "description": "maximum number of results to return",
+                        "required": false,
+                        "schema": {
+                            "type": "long",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "tracking",
+                        "in": "cookie",
+                        "description": "tracking flag",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "schema response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Schema"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a schema",
+                "operationId": "create schema",
+                "requestBody": {
+                    "description": "Schema to create",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Newly created schema",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Schema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/schemas/{id}": {
+            "get": {
+                "description": "Returns a schema based on a single ID",
+                "operationId": "find schema by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of schema to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "long"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "schema response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Schema"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Schema": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/NewSchema"
+                    },
+                    {
+                        "type": "object",
+                        "required": [
+                            "id"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "long"
+                            }
+                        }
+                    }
+                ]
+            },
+            "NewSchema": {
+                "type": "object",
+                "required": [
+                    "version"
+                ],
+                "properties": {
+                    "version": {
+                        "type": "string",
+                        "enum": [
+                            "3.0.0",
+                            "3.0.1"
+                        ]
+                    }
+                }
+            },
+            "Error": {
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
