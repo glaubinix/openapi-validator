@@ -2,6 +2,7 @@
 
 namespace Glaubinix\OpenAPI;
 
+use Glaubinix\OpenAPI\EventListener\ParamConverterListener;
 use Glaubinix\OpenAPI\SchemaConverter\CleanRequired;
 use Glaubinix\OpenAPI\SchemaConverter\NotSupported;
 use Glaubinix\OpenAPI\SchemaConverter\ReadWriteOnly;
@@ -17,8 +18,12 @@ use League\JsonReference\Dereferencer;
 use League\JsonReference\ReferenceSerializer\InlineReferenceSerializer;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Silex\Api\EventListenerProviderInterface;
+use Silex\Application;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
-class OpenAPIServiceProvider implements ServiceProviderInterface
+class OpenAPIServiceProvider implements ServiceProviderInterface, EventListenerProviderInterface
 {
     public function register(Container $pimple): void
     {
@@ -108,5 +113,14 @@ class OpenAPIServiceProvider implements ServiceProviderInterface
 
             return $dereferencer;
         };
+
+        $pimple['openapi.listener.paramconverter'] = function (Container $pimple) {
+            return new ParamConverterListener($pimple['openapi.validator.request'], $pimple['openapi.schema.loader'], $pimple['openapi.schema.file']);
+        };
+    }
+
+    public function subscribe(Container $app, EventDispatcherInterface $dispatcher): void
+    {
+        $dispatcher->addListener(KernelEvents::CONTROLLER, [$app['openapi.listener.paramconverter'], 'onKernelController'], 128);
     }
 }
