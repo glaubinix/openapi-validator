@@ -14,6 +14,16 @@ class OpenAPI3 implements SchemaInterface
         $this->schema = $schema;
     }
 
+    public function getAllPaths(): array
+    {
+        $paths = [];
+        foreach (get_object_vars($this->schema->paths) as $path => $properties) {
+            $paths[$path] = array_keys(get_object_vars($this->schema->paths->{$path}));
+        }
+
+        return $paths;
+    }
+
     public function getQueryParameters(string $path, string  $method): array
     {
         return $this->getRequestParameters($path, $method, 'query');

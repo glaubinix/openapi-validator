@@ -4,6 +4,7 @@ namespace Glaubinix\OpenAPI\RequestAdapter;
 
 interface RequestAdapterInterface
 {
+    public function getPath(): string;
     public function getMethod(): string;
     public function getContent(): string;
     public function getMediaType(): string;

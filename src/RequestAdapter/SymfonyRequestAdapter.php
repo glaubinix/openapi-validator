@@ -14,6 +14,11 @@ class SymfonyRequestAdapter implements RequestAdapterInterface
         $this->request = $request;
     }
 
+    public function getPath(): string
+    {
+        return $this->request->getRequestUri();
+    }
+
     public function getMethod(): string
     {
         return $this->request->getMethod();

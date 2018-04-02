@@ -38,7 +38,7 @@ class RequestValidator
 
     public function validate(SchemaInterface $schema, RequestAdapterInterface $request): OpenAPIRequest
     {
-        $path = $this->pathResolver->getOpenApiPath($request);
+        $path = $this->pathResolver->getOpenApiPath($request, $schema);
 
         return new OpenAPIRequest(
             (array)$this->queryParametersValidator->validate($schema, $request, $path),

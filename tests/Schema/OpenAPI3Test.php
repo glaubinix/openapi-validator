@@ -71,6 +71,11 @@ class OpenAPI3Test extends TestCase
         ])));
     }
 
+    public function testGetAllPaths(): void
+    {
+        $this->assertSame(['/' => ['post']], $this->schema->getAllPaths());
+    }
+
     public function testGetQueryParameters(): void
     {
         $this->assertSame(json_encode([['name' => 'query', 'in' => 'query', 'schema' => ['type' => 'string']]]), json_encode($this->schema->getQueryParameters('/', 'post')));

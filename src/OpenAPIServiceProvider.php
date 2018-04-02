@@ -95,7 +95,11 @@ class OpenAPIServiceProvider implements ServiceProviderInterface
         };
 
         $pimple['openapi.pathresolver'] = function (Container $pimple) {
-            return new PathResolver\SymfonyPathResolver($pimple['routes']);
+            return new PathResolver\SymfonyPathResolver($pimple['routes'], $pimple['openapi.pathresolver.default']);
+        };
+
+        $pimple['openapi.pathresolver.default'] = function () {
+            return new PathResolver\PathResolver();
         };
 
         $pimple['openapi.jsonschema.dereferencer'] = function () {

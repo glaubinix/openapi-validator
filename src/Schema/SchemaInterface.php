@@ -4,6 +4,7 @@ namespace Glaubinix\OpenAPI\Schema;
 
 interface SchemaInterface
 {
+    public function getAllPaths(): array;
     public function getQueryParameters(string $path, string  $method): array;
     public function getHeaderParameters(string $path, string  $method): array;
     public function getPathParameters(string $path, string  $method): array;
