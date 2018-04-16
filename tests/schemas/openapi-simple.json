@@ -16,9 +16,6 @@
             "example": "Test name",
             "description": "Test name",
             "nullable": true
-        },
-        "date": {
-            "type": "date"
         }
     },
     "x-patternProperties": {

@@ -13,7 +13,9 @@ abstract class IntegrationTest extends TestCase
     protected function setUp(): void
     {
         $this->app = new Application();
-        $this->app->register(new OpenAPIServiceProvider());
+        $this->app->register(new OpenAPIServiceProvider(), [
+            'openapi.schema.file' => 'file://' .  __DIR__ . '/schemas/schemastore-openapi.json',
+        ]);
         $this->app->boot();
     }
 }

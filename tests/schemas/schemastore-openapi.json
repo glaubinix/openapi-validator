@@ -22,7 +22,7 @@
                         "description": "maximum number of results to return",
                         "required": false,
                         "schema": {
-                            "type": "long",
+                            "type": "integer",
                             "minimum": 1
                         }
                     },
@@ -101,7 +101,7 @@
                         "description": "ID of schema to fetch",
                         "required": true,
                         "schema": {
-                            "type": "long"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -144,7 +144,7 @@
                         ],
                         "properties": {
                             "id": {
-                                "type": "long"
+                                "type": "integer"
                             }
                         }
                     }

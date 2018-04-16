@@ -51,10 +51,6 @@ class SchemaConverterTest extends TestCase
                     'type' => ['string', 'null'],
                     'description' => 'Test name',
                 ],
-                'date' => [
-                    'type' => 'string',
-                    'format' => 'date',
-                ],
             ]]), json_encode($schema));
     }
 }
