@@ -2,8 +2,8 @@
 
 namespace Glaubinix\OpenAPI\PathResolver;
 
-use Glaubinix\OpenAPI\RequestAdapter\RequestAdapterInterface;
 use Glaubinix\OpenAPI\RequestAdapter\SymfonyRequestAdapter;
+use Glaubinix\OpenAPI\ResponseAdapter\SymfonyResponseAdapter;
 use Glaubinix\OpenAPI\Schema\SchemaInterface;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
@@ -25,12 +25,12 @@ class SymfonyPathResolver implements PathResolverInterface
         $this->fallbackResolver = $fallbackResolver;
     }
 
-    public function getOpenApiPath(RequestAdapterInterface $request, SchemaInterface $schema): string
+    public function getOpenApiPath(PathResolvableInterface $pathResolvable, SchemaInterface $schema): string
     {
-        if ($request instanceof SymfonyRequestAdapter) {
-            return $this->routes->get($request->getRouteName())->getPath();
+        if ($pathResolvable instanceof SymfonyRequestAdapter || $pathResolvable instanceof SymfonyResponseAdapter) {
+            return $this->routes->get($pathResolvable->getRouteName())->getPath();
         }
 
-        return $this->fallbackResolver->getOpenApiPath($request, $schema);
+        return $this->fallbackResolver->getOpenApiPath($pathResolvable, $schema);
     }
 }

@@ -4,6 +4,7 @@ namespace Glaubinix\OpenAPI\PathResolver;
 
 use Glaubinix\OpenAPI\RequestAdapter\RequestAdapterInterface;
 use Glaubinix\OpenAPI\RequestAdapter\SymfonyRequestAdapter;
+use Glaubinix\OpenAPI\ResponseAdapter\SymfonyResponseAdapter;
 use Glaubinix\OpenAPI\Schema\SchemaInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Route;
@@ -23,9 +24,12 @@ class SymfonyPathResolverTest extends TestCase
         $this->resolver = new SymfonyPathResolver($this->routeCollection, $this->fallbackResolver);
     }
 
-    public function testGetOpenApiPath(): void
+    /**
+     * @dataProvider pathProvider
+     */
+    public function testGetOpenApiPath(string $requestResponseClass): void
     {
-        $request = $this->getMockBuilder(SymfonyRequestAdapter::class)->disableOriginalConstructor()->getMock();
+        $requestResponse = $this->getMockBuilder($requestResponseClass)->disableOriginalConstructor()->getMock();
         $schema = $this->getMockBuilder(SchemaInterface::class)->getMock();
 
         $this->fallbackResolver
@@ -36,7 +40,7 @@ class SymfonyPathResolverTest extends TestCase
         $routeName = 'route';
         $route = new Route($path);
 
-        $request
+        $requestResponse
             ->expects($this->once())
             ->method('getRouteName')
             ->will($this->returnValue($routeName));
@@ -47,9 +51,17 @@ class SymfonyPathResolverTest extends TestCase
             ->with($this->equalTo($routeName))
             ->will($this->returnValue($route));
 
-        $actual = $this->resolver->getOpenApiPath($request, $schema);
+        $actual = $this->resolver->getOpenApiPath($requestResponse, $schema);
 
         $this->assertSame($path, $actual);
+    }
+
+    public function pathProvider()
+    {
+        return [
+            [SymfonyRequestAdapter::class],
+            [SymfonyResponseAdapter::class],
+        ];
     }
 
     public function testGetOpenApiPathFallback(): void

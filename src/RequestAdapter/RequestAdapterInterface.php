@@ -2,9 +2,10 @@
 
 namespace Glaubinix\OpenAPI\RequestAdapter;
 
-interface RequestAdapterInterface
+use Glaubinix\OpenAPI\PathResolver\PathResolvableInterface;
+
+interface RequestAdapterInterface extends PathResolvableInterface
 {
-    public function getPath(): string;
     public function getMethod(): string;
     public function getContent(): string;
     public function getMediaType(): string;

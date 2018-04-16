@@ -3,34 +3,33 @@
 namespace Glaubinix\OpenAPI\PathResolver;
 
 use Glaubinix\OpenAPI\Exception\UnsupportedPathException;
-use Glaubinix\OpenAPI\RequestAdapter\RequestAdapterInterface;
 use Glaubinix\OpenAPI\Schema\SchemaInterface;
 use Rize\UriTemplate;
 
 class PathResolver implements PathResolverInterface
 {
-    public function getOpenApiPath(RequestAdapterInterface $request, SchemaInterface $schema): string
+    public function getOpenApiPath(PathResolvableInterface $pathResolvable, SchemaInterface $schema): string
     {
         $uriTemplate = new UriTemplate();
         $availablePaths = $schema->getAllPaths();
         foreach ($availablePaths as $path => $methods) {
-            if (!in_array($request->getMethod(), $methods, true)) {
+            if (!in_array($pathResolvable->getMethod(), $methods, true)) {
                 continue;
             }
 
-            if ($path === $request->getPath()) {
+            if ($path === $pathResolvable->getPath()) {
                 return $path;
             }
 
-            $params = $uriTemplate->extract($path, $request->getPath());
+            $params = $uriTemplate->extract($path, $pathResolvable->getPath());
             $constructedPath = str_replace(array_map(function ($param) {
                 return '{' . $param . '}';
             }, array_keys($params)), array_values($params), $path);
-            if ($constructedPath === $request->getPath()) {
+            if ($constructedPath === $pathResolvable->getPath()) {
                 return $path;
             }
         }
 
-        throw new UnsupportedPathException(sprintf('Unable to resolve path: %s', $request->getPath()));
+        throw new UnsupportedPathException(sprintf('Unable to resolve path: %s', $pathResolvable->getPath()));
     }
 }

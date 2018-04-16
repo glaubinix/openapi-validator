@@ -18,6 +18,11 @@ class SymfonyResponseAdapter implements ResponseAdapterInterface
         $this->request = $request;
     }
 
+    public function getPath(): string
+    {
+        return $this->request->getRequestUri();
+    }
+
     public function getMethod(): string
     {
         return $this->request->getMethod();
@@ -41,5 +46,10 @@ class SymfonyResponseAdapter implements ResponseAdapterInterface
     public function getContent(): string
     {
         return $this->response->getContent();
+    }
+
+    public function getRouteName(): string
+    {
+        return $this->request->attributes->get('_route');
     }
 }
