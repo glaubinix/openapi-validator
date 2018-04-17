@@ -27,7 +27,7 @@ class SymfonyPathResolver implements PathResolverInterface
 
     public function getOpenApiPath(PathResolvableInterface $pathResolvable, SchemaInterface $schema): string
     {
-        if ($pathResolvable instanceof SymfonyRequestAdapter || $pathResolvable instanceof SymfonyResponseAdapter) {
+        if (($pathResolvable instanceof SymfonyRequestAdapter || $pathResolvable instanceof SymfonyResponseAdapter) && $pathResolvable->getRouteName()) {
             return $this->routes->get($pathResolvable->getRouteName())->getPath();
         }
 

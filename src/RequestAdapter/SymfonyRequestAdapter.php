@@ -59,7 +59,7 @@ class SymfonyRequestAdapter implements RequestAdapterInterface
         return $this->request->cookies->all();
     }
 
-    public function getRouteName(): string
+    public function getRouteName(): ?string
     {
         return $this->request->attributes->get('_route');
     }
