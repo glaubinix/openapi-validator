@@ -3,7 +3,7 @@
     "description": "",
     "type": "library",
     "require": {
-        "php": "^7.2",
+        "php": "^7.1",
         "justinrainbow/json-schema": "^5.2",
         "league/json-reference": "^1.1",
         "rize/uri-template": "^0.3.2"
