@@ -110,4 +110,13 @@ class OpenAPI3 implements SchemaInterface
 
         return $this->schema->paths->{$path}->{$method}->responses->{$statusCode}->content->{$mediaType}->schema;
     }
+
+    public function getComponentSchema(string $schema): object
+    {
+        if (property_exists($this->schema->components->schemas, $schema)) {
+            return $this->schema->components->schemas->{$schema};
+        }
+
+        throw new Exception\UnsupportedComponentException('Component not found: ' . $schema);
+    }
 }

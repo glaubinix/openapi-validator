@@ -11,4 +11,5 @@ interface SchemaInterface
     public function getCookieParameters(string $path, string  $method): array;
     public function getRequestBody(string $path, string $method, string $mediaType): object;
     public function getResponseBody(string $path, string $method, int $statusCode, string $mediaType): object;
+    public function getComponentSchema(string $schema): object;
 }

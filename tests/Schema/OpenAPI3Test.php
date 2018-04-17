@@ -68,6 +68,13 @@ class OpenAPI3Test extends TestCase
                     ],
                 ],
             ],
+            'components' => [
+                'schemas' => [
+                    'Error' => [
+                        'type' => 'object'
+                    ]
+                ]
+            ]
         ])));
     }
 
@@ -160,5 +167,18 @@ class OpenAPI3Test extends TestCase
     public function testGetResponseBodyUndefinedMediaType(): void
     {
         $this->schema->getResponseBody('/', 'post', 200, 'text/html');
+    }
+
+    public function testGetComponentSchema(): void
+    {
+        $this->assertSame(['type' => 'object'], (array) $this->schema->getComponentSchema('Error'));
+    }
+
+    /**
+     * @expectedException \Glaubinix\OpenAPI\Exception\UnsupportedComponentException
+     */
+    public function testGetComponentSchemaNotFound(): void
+    {
+        $this->schema->getComponentSchema('Invalid');
     }
 }
