@@ -25,7 +25,7 @@ class RequestBodyValidator
     public function validate(SchemaInterface $schema, RequestAdapterInterface $request, string $path)
     {
         $openApiSchema = $schema->getRequestBody($path, $request->getMethod(), $request->getMediaType());
-        $jsonSchema = $this->converter->convert($openApiSchema);
+        $jsonSchema = $this->converter->convert($openApiSchema, ['removeReadOnly' => true]);
 
         $content = $request->getContent();
         $value = $content ? json_decode($content) : $content;

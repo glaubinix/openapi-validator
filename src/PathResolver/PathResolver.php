@@ -13,7 +13,7 @@ class PathResolver implements PathResolverInterface
         $uriTemplate = new UriTemplate();
         $availablePaths = $schema->getAllPaths();
         foreach ($availablePaths as $path => $methods) {
-            if (!in_array($pathResolvable->getMethod(), $methods, true)) {
+            if (!in_array(strtolower($pathResolvable->getMethod()), $methods, true)) {
                 continue;
             }
 

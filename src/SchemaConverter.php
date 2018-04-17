@@ -57,6 +57,10 @@ class SchemaConverter
         }
 
         foreach ($this->converters as $converter) {
+            if ($schema === null) {
+                return $schema;
+            }
+
             $schema = $converter->convert($schema, $options);
         }
 

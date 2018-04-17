@@ -41,7 +41,7 @@ class SymfonyPathResolverTest extends TestCase
         $route = new Route($path);
 
         $requestResponse
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getRouteName')
             ->will($this->returnValue($routeName));
 

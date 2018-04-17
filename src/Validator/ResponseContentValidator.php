@@ -2,6 +2,7 @@
 
 namespace Glaubinix\OpenAPI\Validator;
 
+use Glaubinix\OpenAPI\Exception\JsonException;
 use Glaubinix\OpenAPI\Exception\ValidationException;
 use Glaubinix\OpenAPI\ResponseAdapter\ResponseAdapterInterface;
 use Glaubinix\OpenAPI\Schema\SchemaInterface;
@@ -24,7 +25,7 @@ class ResponseContentValidator
     public function validate(SchemaInterface $schema, ResponseAdapterInterface $response, string $path)
     {
         $openApiSchema = $schema->getResponseBody($path, $response->getMethod(), $response->getStatusCode(), $response->getMediaType());
-        $jsonSchema = $this->converter->convert($openApiSchema);
+        $jsonSchema = $this->converter->convert($openApiSchema, ['removeWriteOnly' => true]);
 
         $content = $response->getContent();
         $value = $content ? json_decode($content) : $content;
