@@ -26,7 +26,11 @@ class ResponseContentValidator
         $openApiSchema = $schema->getResponseBody($path, $response->getMethod(), $response->getStatusCode(), $response->getMediaType());
         $jsonSchema = $this->converter->convert($openApiSchema);
 
-        $value = $response->getContent();
+        $content = $response->getContent();
+        $value = $content ? json_decode($content) : $content;
+        if (json_last_error()) {
+            throw new JsonException(json_last_error_msg());
+        }
 
         $this->validator->reset();
         $this->validator->validate($value, $jsonSchema);

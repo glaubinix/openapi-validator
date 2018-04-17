@@ -13,6 +13,7 @@ use Glaubinix\OpenAPI\Validator\HeaderParametersValidator;
 use Glaubinix\OpenAPI\Validator\PathParametersValidator;
 use Glaubinix\OpenAPI\Validator\QueryParametersValidator;
 use Glaubinix\OpenAPI\Validator\RequestBodyValidator;
+use Glaubinix\OpenAPI\Validator\ResponseContentValidator;
 use JsonSchema\Validator;
 use League\JsonReference\Dereferencer;
 use League\JsonReference\ReferenceSerializer\InlineReferenceSerializer;
@@ -26,6 +27,18 @@ class OpenAPIServiceProvider implements ServiceProviderInterface, EventListenerP
 {
     public function register(Container $pimple): void
     {
+        $pimple['openapi.validator.response.throwexceptions'] = false;
+
+        $pimple['openapi.validator.response'] = function (Container $pimple) {
+            return new ResponseValidator(
+                $pimple['openapi.pathresolver'],
+                $pimple['openapi.validator.header'],
+                $pimple['openapi.validator.responsecontent'],
+                $pimple['logger'],
+                $pimple['openapi.validator.response.throwexceptions']
+            );
+        };
+
         $pimple['openapi.validator.request'] = function (Container $pimple) {
             return new RequestValidator(
                 $pimple['openapi.pathresolver'],
@@ -71,6 +84,13 @@ class OpenAPIServiceProvider implements ServiceProviderInterface, EventListenerP
 
         $pimple['openapi.validator.requestbody'] = function (Container $pimple) {
             return new RequestBodyValidator(
+                $pimple['openapi.schema.converter'],
+                $pimple['openapi.jsonschema.validator']
+            );
+        };
+
+        $pimple['openapi.validator.responsecontent'] = function (Container $pimple) {
+            return new ResponseContentValidator(
                 $pimple['openapi.schema.converter'],
                 $pimple['openapi.jsonschema.validator']
             );
