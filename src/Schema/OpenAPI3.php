@@ -104,6 +104,10 @@ class OpenAPI3 implements SchemaInterface
             throw new Exception\UnsupportedStatusCodeException(sprintf('Status code %s not supported for path %s and method %s', $mediaType, $path, $method));
         }
 
+        if (!property_exists($this->schema->paths->{$path}->{$method}->responses->{$statusCode}, 'content')) {
+            return new \stdClass();
+        }
+
         if (!property_exists($this->schema->paths->{$path}->{$method}->responses->{$statusCode}->content, $mediaType)) {
             throw new Exception\UnsupportedMediaTypeException(sprintf('Media type %s not supported for path %s and method %s and status code %s', $mediaType, $path, $method, $statusCode));
         }
