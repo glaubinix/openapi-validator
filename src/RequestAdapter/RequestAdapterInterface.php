@@ -7,7 +7,7 @@ use Glaubinix\OpenAPI\PathResolver\PathResolvableInterface;
 interface RequestAdapterInterface extends PathResolvableInterface
 {
     public function getMethod(): string;
-    public function getContent(): string;
+    public function getContent(): ?string;
     public function getMediaType(): string;
     public function getHeaderParameters(): array;
     public function getQueryParameters(): array;

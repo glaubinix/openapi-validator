@@ -24,7 +24,7 @@ class SymfonyRequestAdapter implements RequestAdapterInterface
         return $this->request->getMethod();
     }
 
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->request->getContent();
     }
